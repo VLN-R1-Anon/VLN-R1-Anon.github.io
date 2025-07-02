@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <meta charset="utf-8">
+  <!-- Meta tags for social media banners, these should be filled in appropriately as they are your "business card" -->
+  <!-- Replace the content tag with appropriate information -->
+  <meta name="description" content="VLN-R1">
+  <meta property="og:title" content="VLN-R1" />
+  <meta property="og:description"
+    content="VLN-R1: Vision-Language Navigation via Reinforcement Fine-Tuning" />
+  <meta property="og:url" content="URL OF THE WEBSITE" />
+  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X630-->
+  <meta property="og:image" content="static/image/video_t1.png" />
+  <meta property="og:image:width" content="2412" />
+  <meta property="og:image:height" content="1394" />
+
+  <title>VLN-R1</title>
+  <link rel="icon" type="image/x-icon" href="./static/images/logonew.png">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</head>
+
+<body>
+
+  <section class="hero banner">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title" style="display: flex; align-items: center;">
+              <i class="pixart-alpha-icon" style="font-size: 120px; margin-right: -20px; margin-top: -40px;"></i>
+              <span style="margin-left: 0px;">
+                <span style="color: rgb(223,126,35); font-weight: bold;font-size: 52px;">VLN-R1:</span>
+                <span style="color: white; font-weight: bold;  font-size: 52px;">Vision-Language Navigation via Reinforcement Fine-Tuning</span></br>
+              </span>
+            </h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block" style="color: rgb(255,255,255);">Anonymous Authors</span>
+            </div>
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero is-small">
+    <div class="hero-body">
+      <div class="container is-max-desktop is-centered has-text-centered">
+        <div class="item">
+          <img src="teaser.png" alt="Overview of the proposed method" class="mb-4" />
+          <h2 class="content has-text-justified">
+            <strong>Overview of VLN-R1.</strong> Previous LLM/LVLM models were based on discrete positions and used a third-person perspective for path planning. 
+            In contrast, VLN-R1 directly explores in a continuous environment using first-person perspective videos. 
+            We train the LVLM using Supervised Fine-Tuning (SFT) and Reinforcement Fine-Tuning (RFT).
+          </h2>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Paper abstract -->
+  <section class="section hero is-light">
+    <div class="hero-body">
+      <div class="container is-max-desktop is-centered has-text-centered">
+        <h2 class="title is-3">Abstract</h2>
+        <h2 class="content has-text-justified">
+          <strong>Vision-Language Navigation (VLN)</strong> is a core challenge in embodied AI, requiring agents to navigate real-world environments using natural language instructions. Current language model-based navigation systems operate on discrete topological graphs, limiting path planning to predefined node connections. We propose <strong>VLN-R1</strong>, an end-to-end framework that leverages Large Vision-Language Models (LVLM) to directly translate egocentric video streams into continuous navigation actions, adopting GRPO-based training inspired by DeepSeek-R1. 
+            To enable effective training, we first construct the <strong>VLN-Ego</strong> dataset using a 3D simulator, i.e., Habitat, and propose Long-Short Memory Sampling to balance historical and current observations. While large language models can supervise complete textual instructions, they lack fine-grained action-level control.
+            Our framework employs a two-stage training approach: <strong>a) Supervised fine-tuning (SFT)</strong> to align the model's action sequence text predictions with expert demonstrations, followed by <strong>b) Reinforcement fine-tuning (RFT)</strong> enhanced with a Time-Decayed Reward (TDR) mechanism that strategically weights multi-step future actions.
+            Experimental results show VLN-R1 achieves strong performance on the VLN-CE benchmark. VLN-R1 proves LVLMs can drive embodied navigation and enhance task-specific reasoning through data-efficient, reward-driven post-training.
+        </h2>
+      </div>
+    </div>
+  </section>
+  <!-- End paper abstract -->
+
+  <!-- Image carousel -->
+  <section class="hero is-small">
+    <div class="hero-body">
+      <div class="container is-max-desktop is-centered has-text-centered">
+        <h2 class="title is-3">Model Architecture of VLN-R1</h2>
+        <div class="item">
+          <img src="framework.png" alt="Model architecture diagram" class="mb-6" />
+          <h2 class="content has-text-justified">
+            VLN-R1 employs a Long-Short Memory approach for processing visual inputs. The training consists of two stages. During the supervised fine-tuning (SFT) stage, we only supervise the output text. 
+            In the reinforcement fine-tuning (RFT) stage, we implement supervision using a designed Time-Decayed Reward (TDR) mechanism.
+          </h2>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero is-small">
+    <div class="hero-body">
+      <div class="container is-max-desktop is-centered has-text-centered">
+        <h2 class="title is-3">Dataset Construction: VLN-Ego</h2>
+        <div class="item">
+          <img src="dataset.png" alt="Dataset construction overview" />
+          <h2 class="content has-text-justified">
+            Data Engine: VLN-Ego. We created a dataset named VLN-Ego for LVLM-based navigation using Habitat's virtual simulation engine. Its textual annotations primarily consist of three parts: Instruction Part, Vision Part, and Action Part.
+          </h2>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End image carousel -->
+
+  <section class="section hero is-small is-light 2d">
+    <div class="hero-body">
+      <div class="container is-centered has-text-centered">
+        <h2 class="title is-3">Experimental Results</h2>
+        
+        <!-- Responsive grid layout -->
+        <div class="columns is-multiline is-centered">
+          <!-- Row 1, Col 1: demo1.gif -->
+          <div class="column is-half-desktop is-full-mobile mb-6">
+            <div class="card">
+              <div class="card-image">
+                <figure class="image is-16by9">
+                  <img src="demo1.gif" alt="Demo 1" loading="lazy" class="rounded-lg shadow-md">
+                </figure>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Row 1, Col 2: demo2.gif -->
+          <div class="column is-half-desktop is-full-mobile mb-6">
+            <div class="card">
+              <div class="card-image">
+                <figure class="image is-16by9">
+                  <img src="demo2.gif" alt="Demo 2" loading="lazy" class="rounded-lg shadow-md">
+                </figure>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Row 2, Col 1: demo3.gif -->
+          <div class="column is-half-desktop is-full-mobile mb-6">
+            <div class="card">
+              <div class="card-image">
+                <figure class="image is-16by9">
+                  <img src="demo3.gif" alt="Demo 3" loading="lazy" class="rounded-lg shadow-md">
+                </figure>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Row 2, Col 2: demo4.gif -->
+          <div class="column is-half-desktop is-full-mobile mb-6">
+            <div class="card">
+              <div class="card-image">
+                <figure class="image is-16by9">
+                  <img src="demo4.gif" alt="Demo 4" loading="lazy" class="rounded-lg shadow-md">
+                </figure>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!--BibTex citation -->
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">Reference</h2>
+      <pre>
+<code>
+@article{VLNR1,
+  title={VLN-R1: Vision-Language Navigation via Reinforcement Fine-Tuning},
+  author={Anonymous Authors},
+  journal={arXiv preprint},
+  year={2025}
+}
+</code>
+</pre>
+    </div>
+  </section>
+
+</body>
+</html>
